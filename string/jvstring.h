@@ -7,8 +7,6 @@
 #define JVSTRING_HEADER(str) ((jvstring_header *)str - 1)
 
 // To differentiate when to use each.
-// Passing a regular char* into jvstring
-// functions is undefined behavior.
 typedef char *jvstring;
 
 typedef struct {
@@ -18,7 +16,7 @@ typedef struct {
 
 jvstring_header _emptyJvstringHeader = {0};
 
-char *jvstring_make(const char *str) {
+jvstring jvstring_make(const char *str) {
 	size_t strLen = strlen(str);
 
 	jvstring_header *h = malloc(sizeof(*h) + (sizeof(char) * strLen + 1));
@@ -35,9 +33,11 @@ static inline size_t jvstring_len(jvstring str) {
 }
 
 jvstring jvstring_cat(jvstring dest, jvstring src) {
-	if (JVSTRING_HEADER(dest)->cap < JVSTRING_HEADER(src)->len + JVSTRING_HEADER(dest)->len) {
-		dest = realloc();
-	}
+	char *new = malloc(jvstring_len(dest) + jvstring_len(src) + 1);
+	memcpy(new, dest, jvstring_len(dest));
+	memcpy(new + jvstring_len(dest), src, jvstring_len(src) + 1);
+
+	return jvstring_make(new);
 }
 
 static inline void jvstring_free(jvstring str) {
