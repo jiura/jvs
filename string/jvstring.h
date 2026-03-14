@@ -10,39 +10,41 @@
 typedef char *jvstring;
 
 typedef struct {
-	size_t len;
-	size_t cap;
+    size_t len;
+    size_t cap;
 } jvstring_header;
 
 jvstring_header _emptyJvstringHeader = {0};
 
 jvstring jvstring_make(const char *str) {
-	size_t strLen = strlen(str);
+    size_t strLen = strlen(str);
 
-	jvstring_header *h = malloc(sizeof(*h) + (sizeof(char) * strLen + 1));
+    jvstring_header *h = malloc(sizeof(*h) + (sizeof(char) * strLen + 1));
 
-	h->len = strLen;
-	h->cap = strLen;
-	memcpy((char *)(h + 1), str, strLen + 1);
+    h->len = strLen;
+    h->cap = strLen;
+    memcpy((char *)(h + 1), str, strLen + 1);
 
-	return (char *)(h + 1);
+    return (char *)(h + 1);
 }
 
 static inline size_t jvstring_len(jvstring str) {
-	return JVSTRING_HEADER(str)->len;
+    return JVSTRING_HEADER(str)->len;
 }
 
 jvstring jvstring_cat(jvstring dest, jvstring src) {
-	char *new = malloc(jvstring_len(dest) + jvstring_len(src) + 1);
-	memcpy(new, dest, jvstring_len(dest));
-	memcpy(new + jvstring_len(dest), src, jvstring_len(src) + 1);
+    char *new = malloc(jvstring_len(dest) + jvstring_len(src) + 1);
+    memcpy(new, dest, jvstring_len(dest));
+    memcpy(new + jvstring_len(dest), src, jvstring_len(src) + 1);
 
-	return jvstring_make(new);
+    return jvstring_make(new);
 }
 
 static inline void jvstring_free(jvstring str) {
-	if (!str) return;
-	free(JVSTRING_HEADER(str));
+    if (!str)
+        return;
+
+    free(JVSTRING_HEADER(str));
 }
 
 #endif
