@@ -14,7 +14,12 @@ typedef struct {
 
 #define jvs_arrCount(arr) JVS_ARR_HEADER(arr)->count
 
-#define jvs_arrFree(arr) free(JVS_ARR_HEADER(arr))
+static inline void jvs_arrFree(void *arr) {
+    if (!arr)
+        return;
+
+    free(JVS_ARR_HEADER(arr));
+}
 
 #define jvs_arrPushFront(arr, item)                                    \
     do {                                                               \

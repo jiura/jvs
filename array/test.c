@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "array.h"
+#include "jvs_array.h"
 
 int main() {
     JVS_ARR(int) nums = NULL;
