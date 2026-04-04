@@ -1,3 +1,6 @@
+#ifndef JVS_ARRAY_H
+#define JVS_ARRAY_H
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -92,3 +95,5 @@ static inline void jvs_arrFree(void *arr) {
                         sizeof(*(arr)));                         \
         }                                                        \
     } while (0);
+
+#endif
