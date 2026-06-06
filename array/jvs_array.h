@@ -70,13 +70,13 @@ static inline void jvs_arrFree(void *arr) {
         }                                                              \
                                                                        \
         (arr)[header->count++] = (item);                               \
-    } while (0)
+    } while (0);
 
 #define jvs_arrPopFront(arr)                                          \
-    {                                                                 \
+    do {                                                                 \
         memmove((arr), (arr) + 1,                                     \
                 (JVS_ARR_HEADER(arr)->count-- - 1) * sizeof(*(arr))); \
-    }
+    } while (0);
 
 #define jvs_arrPopBack(arr)           \
     do {                              \
