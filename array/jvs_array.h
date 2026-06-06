@@ -17,12 +17,15 @@ typedef struct {
 
 #define jvs_arrCount(arr) JVS_ARR_HEADER(arr)->count
 
-static inline void jvs_arrFree(void *arr) {
-    if (!arr)
-        return;
+// static inline void jvs_arrFree(void *arr) {
+//     if (!arr)
+//         return;
+//
+//     free(JVS_ARR_HEADER(arr));
+// }
 
-    free(JVS_ARR_HEADER(arr));
-}
+#define jvs_arrFree(arr) \
+    do { if (arr) free(JVS_ARR_HEADER(arr)); } while(0)
 
 #define jvs_arrPushFront(arr, item)                                    \
     do {                                                               \
