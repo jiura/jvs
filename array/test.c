@@ -25,6 +25,12 @@ int main() {
     for (int i = 0; i < jvs_arrCount(nums); ++i)
         printf("%d\n", nums[i]);
 
+    jvs_arrEmpty(nums);
+
+    printf("\nNow emptied, count is %zu and no values should appear below.\n", jvs_arrCount(nums));
+    for (int i = 0; i < jvs_arrCount(nums); ++i)
+        printf("%d\n", nums[i]);
+
     jvs_arrFree(nums);
 
     return 0;

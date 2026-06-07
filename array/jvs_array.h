@@ -35,6 +35,13 @@ static inline size_t jvs_arrCount(void *arr) {
             JVS_FREE(JVS_ARR_HEADER(arr)); \
     } while (0)
 
+// Empties array WITHOUT freeing
+#define jvs_arrEmpty(arr)                                        \
+    do {                                                         \
+        memset(arr, 0, sizeof(*arr) * JVS_ARR_HEADER(arr)->cap); \
+        JVS_ARR_HEADER(arr)->count = 0;                          \
+    } while (0)
+
 #define jvs_arrPushFront(arr, item)                                    \
     do {                                                               \
         JvsArrHeader *header = NULL;                                   \
