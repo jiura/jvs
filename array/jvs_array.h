@@ -15,17 +15,18 @@ typedef struct {
 
 #define JVS_ARR_HEADER(arr) ((JvsArrHeader *)(arr) - 1)
 
-#define jvs_arrCount(arr) JVS_ARR_HEADER(arr)->count
+static inline size_t jvs_arrCount(void *arr) {
+    if (arr)
+        return JVS_ARR_HEADER(arr)->count;
 
-// static inline void jvs_arrFree(void *arr) {
-//     if (!arr)
-//         return;
-//
-//     free(JVS_ARR_HEADER(arr));
-// }
+    return 0;
+}
 
-#define jvs_arrFree(arr) \
-    do { if (arr) free(JVS_ARR_HEADER(arr)); } while(0)
+#define jvs_arrFree(arr)               \
+    do {                               \
+        if (arr)                       \
+            free(JVS_ARR_HEADER(arr)); \
+    } while (0)
 
 #define jvs_arrPushFront(arr, item)                                    \
     do {                                                               \
@@ -76,7 +77,7 @@ typedef struct {
     } while (0);
 
 #define jvs_arrPopFront(arr)                                          \
-    do {                                                                 \
+    do {                                                              \
         memmove((arr), (arr) + 1,                                     \
                 (JVS_ARR_HEADER(arr)->count-- - 1) * sizeof(*(arr))); \
     } while (0);
