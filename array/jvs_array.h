@@ -1,8 +1,15 @@
 #ifndef JVS_ARRAY_H
 #define JVS_ARRAY_H
 
+#ifdef __cplusplus
+#include <cstdlib>
+#include <cstring>
+#define JVS_FREE(ptr) std::free(ptr)
+#else
 #include <stdlib.h>
 #include <string.h>
+#define JVS_FREE(ptr) free(ptr)
+#endif
 
 typedef struct {
     size_t count;
@@ -22,10 +29,10 @@ static inline size_t jvs_arrCount(void *arr) {
     return 0;
 }
 
-#define jvs_arrFree(arr)               \
-    do {                               \
-        if (arr)                       \
-            free(JVS_ARR_HEADER(arr)); \
+#define jvs_arrFree(arr)                   \
+    do {                                   \
+        if (arr)                           \
+            JVS_FREE(JVS_ARR_HEADER(arr)); \
     } while (0)
 
 #define jvs_arrPushFront(arr, item)                                    \
