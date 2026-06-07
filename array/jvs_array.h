@@ -58,7 +58,7 @@ static inline size_t jvs_arrCount(void *arr) {
                                                                        \
         memmove((arr) + 1, (arr), header->count++ * sizeof(*arr));     \
         *(arr) = item;                                                 \
-    } while (0);
+    } while (0)
 
 #define jvs_arrPushBack(arr, item)                                     \
     do {                                                               \
@@ -81,18 +81,18 @@ static inline size_t jvs_arrCount(void *arr) {
         }                                                              \
                                                                        \
         (arr)[header->count++] = (item);                               \
-    } while (0);
+    } while (0)
 
 #define jvs_arrPopFront(arr)                                          \
     do {                                                              \
         memmove((arr), (arr) + 1,                                     \
                 (JVS_ARR_HEADER(arr)->count-- - 1) * sizeof(*(arr))); \
-    } while (0);
+    } while (0)
 
 #define jvs_arrPopBack(arr)           \
     do {                              \
         --JVS_ARR_HEADER(arr)->count; \
-    } while (0);
+    } while (0)
 
 #define jvs_arrRemove(arr, idx)                                  \
     do {                                                         \
@@ -105,6 +105,6 @@ static inline size_t jvs_arrCount(void *arr) {
                     (JVS_ARR_HEADER(arr)->count-- - (idx) - 1) * \
                         sizeof(*(arr)));                         \
         }                                                        \
-    } while (0);
+    } while (0)
 
 #endif
